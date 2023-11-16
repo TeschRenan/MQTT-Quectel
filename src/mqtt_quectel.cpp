@@ -189,7 +189,7 @@ uint8_t mqtt_quectel::publish(char* topic, char* content, int qos) {
 	}
 	else{
 
-		sprintf(temp,"%s,%d,%d,%d,\"%s\"%s","AT+QMTPUB=0",msgID,qos,0,topic,"\r\n");
+		sprintf(temp,"%s,%lu,%d,%d,\"%s\"%s","AT+QMTPUB=0",msgID,qos,0,topic,"\r\n");
 
 	}
 
@@ -240,7 +240,7 @@ uint8_t mqtt_quectel::subscribe(char* topic, int qos) {
 
 	sprintf(castQoS,"%i",qos);
 
-	sprintf(temp,"%s,%d,\"%s\",%d%s","AT+QMTSUB=0",msgID,topic,qos,"\r\n");
+	sprintf(temp,"%s,%lu,\"%s\",%d%s","AT+QMTSUB=0",msgID,topic,qos,"\r\n");
 
 	msgID++;
 
@@ -282,7 +282,7 @@ uint8_t mqtt_quectel::unsubscribe(char* topic) {
 
 	memset(temp,0,sizeof(temp));
 
-	sprintf(temp,"%s,%d,\"%s\"%s","AT+QMTUNS=0",msgID,topic,"\r\n");
+	sprintf(temp,"%s,%lu,\"%s\"%s","AT+QMTUNS=0",msgID,topic,"\r\n");
 
 	msgID++;
 
@@ -292,7 +292,7 @@ uint8_t mqtt_quectel::unsubscribe(char* topic) {
 
 	vTaskDelay(1000 / portTICK_PERIOD_MS);
 
-	sprintf(temp,"%s,%d","+QMTUNS: 0",msgID);
+	sprintf(temp,"%s,%lu","+QMTUNS: 0",msgID);
 
 	if (modemLib.verifyResponse(temp, 5000) != 0){
 		
