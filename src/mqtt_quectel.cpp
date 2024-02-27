@@ -203,7 +203,7 @@ uint8_t mqtt_quectel::publish(char* topic, char* content, int qos) {
 
 		modemLib.write(0x1A);
 
-		if (modemLib.verifyResponse("+QMTPUB:", 10000) != 0){
+		if (modemLib.contains("+QMTPUB:", 10000) != 0){
 			
 	
 			ESP_LOGI(TAG,"PUBLISH PACKET SUCCESS");
@@ -248,7 +248,7 @@ uint8_t mqtt_quectel::subscribe(char* topic, int qos) {
 
 	modemLib.write(0x1A);
 
-	if (modemLib.verifyResponse("OK", 5000) != 0){
+	if (modemLib.contains("OK", 5000) != 0){
 
 
 		ESP_LOGI(TAG,"SUBSCRIBE PACKET SUCCESS");
@@ -294,7 +294,7 @@ uint8_t mqtt_quectel::unsubscribe(char* topic) {
 
 	sprintf(temp,"%s,%lu","+QMTUNS: 0",msgID);
 
-	if (modemLib.verifyResponse(temp, 5000) != 0){
+	if (modemLib.contains(temp, 5000) != 0){
 		
 		ESP_LOGI(TAG,"UNSUBSCRIBE PACKET SUCCESS");
 	
